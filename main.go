@@ -13,28 +13,35 @@ var arr = [sizex][sizey]byte{}
 var arr2 = [sizex][sizey]byte{}
 
 func main() {
-	fmt.Println(arr)
+	setupArr()
+
+	s := 0
+	for s < 10 {
+		printArr()
+		step()
+		s++
+	}
+}
+
+func printArr() {
+	for i := 0; i < sizex; i++ {
+		var line string
+		for j := 0; j < sizey; j++ {
+			if arr[i][j] == 255 {
+				line = line + "#"
+			} else {
+				line = line + " "
+			}
+		}
+		fmt.Println(line)
+	}
+}
+
+func setupArr() {
 	for i := 0; i < sizex; i++ {
 		for j := 0; j < sizey; j++ {
 			arr[i][j] = byte((rand.Int() % 2) * 255)
 		}
-	}
-
-	s := 0
-	for s < 10 {
-		for i := 0; i < sizex; i++ {
-			var line string
-			for j := 0; j < sizey; j++ {
-				if arr[i][j] == 255 {
-					line = line + "#"
-				} else {
-					line = line + " "
-				}
-			}
-			fmt.Println(line)
-		}
-		step()
-		s++
 	}
 }
 
