@@ -9,14 +9,14 @@ import (
 const sizex = 10
 const sizey = 10
 
-var arr = [sizex][sizey]bool{}
-var arr2 = [sizex][sizey]bool{}
+var arr = [sizex][sizey]byte{}
+var arr2 = [sizex][sizey]byte{}
 
 func main() {
 	fmt.Println(arr)
 	for i := 0; i < sizex; i++ {
 		for j := 0; j < sizey; j++ {
-			arr[i][j] = rand.Int()%2 == 0
+			arr[i][j] = byte((rand.Int() % 2) * 255)
 		}
 	}
 
@@ -25,7 +25,7 @@ func main() {
 		for i := 0; i < sizex; i++ {
 			var line string
 			for j := 0; j < sizey; j++ {
-				if arr[i][j] {
+				if arr[i][j] == 255 {
 					line = line + "#"
 				} else {
 					line = line + " "
@@ -58,15 +58,15 @@ func calculatePixel(i int, j int, wg *sync.WaitGroup) {
 			if x == i && y == j {
 				continue
 			}
-			if arr[x][y] {
+			if arr[x][y] == 255 {
 				sum++
 			}
 		}
 	}
 	if sum < 2 || sum > 3 {
-		arr2[i][j] = false
+		arr2[i][j] = 0
 	} else if sum == 3 {
-		arr2[i][j] = true
+		arr2[i][j] = 255
 	} else {
 		arr2[i][j] = arr[i][j]
 	}
