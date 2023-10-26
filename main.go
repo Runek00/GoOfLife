@@ -6,11 +6,10 @@ import (
 	"sync"
 )
 
-const sizex = 10
-const sizey = 10
+const size = 10
 
-var arr = [sizex][sizey]byte{}
-var arr2 = [sizex][sizey]byte{}
+var arr = [size][size]byte{}
+var arr2 = [size][size]byte{}
 
 func main() {
 	setupArr()
@@ -24,9 +23,9 @@ func main() {
 }
 
 func printArr() {
-	for i := 0; i < sizex; i++ {
+	for i := 0; i < size; i++ {
 		var line string
-		for j := 0; j < sizey; j++ {
+		for j := 0; j < size; j++ {
 			if arr[i][j] == 255 {
 				line = line + "#"
 			} else {
@@ -38,8 +37,8 @@ func printArr() {
 }
 
 func setupArr() {
-	for i := 0; i < sizex; i++ {
-		for j := 0; j < sizey; j++ {
+	for i := 0; i < size; i++ {
+		for j := 0; j < size; j++ {
 			arr[i][j] = byte((rand.Int() % 2) * 255)
 		}
 	}
@@ -47,8 +46,8 @@ func setupArr() {
 
 func step() {
 	wg := sync.WaitGroup{}
-	for i := 0; i < sizex; i++ {
-		for j := 0; j < sizey; j++ {
+	for i := 0; i < size; i++ {
+		for j := 0; j < size; j++ {
 			wg.Add(1)
 			go calculatePixel(i, j, &wg)
 		}
@@ -60,8 +59,8 @@ func step() {
 func calculatePixel(i int, j int, wg *sync.WaitGroup) {
 	sum := 0
 	defer wg.Done()
-	for x := max(i-1, 0); x < min(sizex-1, i+2); x++ {
-		for y := max(j-1, 0); y < min(sizey-1, j+2); y++ {
+	for x := max(i-1, 0); x < min(size-1, i+2); x++ {
+		for y := max(j-1, 0); y < min(size-1, j+2); y++ {
 			if x == i && y == j {
 				continue
 			}
